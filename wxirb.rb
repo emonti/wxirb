@@ -95,6 +95,8 @@ module WxIRB
     # location of the persistent history file
     HISTFILE = "#{ENV["HOME"]}/.wxirb_history"
 
+    # Initializes a CommandHistory object and loads persistent history
+    # from the file specified in HISTFILE
     def initialize(*opts)
       super(*opts)
       @hpos = nil
