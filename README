@@ -1,0 +1,107 @@
+
+== WxIRB
+
+This is a GUI "irb-alike" console based on WxRuby.
+
+This is really just a port of why_the_lucky_stiff's Shoes GUI irb example to 
+wxruby with the addition of a command history and a few other convenience 
+methods added in the window classes.
+
+Credit to Why.
+See: http://github.com/why/shoes/blob/master/samples/expert-irb.rb
+
+
+== Keyboard Interaction
+
+WxIRB is designed to allow you to edit multi-line ruby statements in the
+input window. The keyboard commands in the input text area are what you'
+d expect in a multi-line text-box with some additional special keyboard 
+modifiers:
+
+*   ENTER : runs a statement through the mock IRB object. (what you'd expect)
+*   META+ENTER : sends a newline inside the window instead of running a command
+*   META+UP-ARROW : scroll up in history
+*   META+DOWN-ARROW : scroll down in history
+
+WxIRB does have a "run" button. Thank goodness!
+
+The output text area is read-only from the UI. Tabbing focus from the output 
+text area should land you back in the input text area.
+
+
+== Interacting with the WxIRB Window Objects
+
+When running wx_irb.rb directly a variable named is created 'wxirb' in the 
+'main' namespace which holds a reference to the wxirb window.
+
+This is done so you can access the UI frame object and children from within the 
+actual interface. A few convenience methods and accessors are exposed this way:
+
+*   'wxirb.clear' lets you clear the output window
+
+*   'wxirb.history' returns the command history object (basically an array)
+
+*   'wxirb.histdump' prints the history to the output text area.
+
+
+The wxirb object also has an 'output' accessor which returns a reference to
+the output text window half of the display. This object has a few methods to
+make it usable (in duck-typing cases) as an IO object. This doesn't 
+actually inherit or implement from the IO class, however.
+
+*   '<<' outputs to the output window
+
+*   'puts' prints directly to the output text area like 'IO.puts' and returns
+    nil.
+
+*   'print' prints directly to the output text area like 'IO.print'
+    and returns nil.
+
+*   'write' prints directly to the output text area like 'IO.write' and returns 
+    the number of bytes written.
+
+*   Note: write, print, and puts all use brown text to differentiate from other
+    output.
+
+*   'close', 'closed?' and 'flush' are also all defined but just emulate an
+    IO object with their return values. Other than that, they do nothing.
+
+
+== WxIRB CommandHistory
+
+WxIRB maintains a persistent history log. The WxIRB history uses a separate 
+file from IRB which is defined by WxIRB::CommandHistory::HISTFILE. It is 
+actually just a YAMLized array.
+
+By default, this is $HOME/.wxirb_history (no way of 'convenient' way of 
+configuring this right now)
+
+History is implemented in the WxIRB::CommandHistory class. This is basically 
+an array with a few convenience methods and accessors:
+
+*   'hpos' is an accessor to the history array position.
+
+*   'prev' moves hpos back one and returns the history value at that position
+
+*   'next' does the same thing, but forward
+
+*   '<<' is an override for the Array superclass that just updates the history 
+    position variable.
+
+*   'save!' saves current history to the persistent history file
+
+*   'save' saves to the persistent history file only if the history has changed.
+    (this is used for an evt_idle event handler by the input text window)
+
+*   'clear' empties the history array and persistent history file
+
+
+== BUGS
+*   Running statements gets slow when the Output window gets very full. Not
+    really sure why this is, but running 'wxirb.clear' periodically helps.
+
+*   An effort is made to rescue most exceptions, but sometimes wxirb will
+    close due to an un-handled exception. Regular 'irb' does this too 
+    sometimes... so I don't feel too bad.
+
+
