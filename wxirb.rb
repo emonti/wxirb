@@ -82,8 +82,10 @@ module WxIRB
   # WxIRB maintains a persistent history log. The WxIRB history uses a separate 
   # file from IRB which is defined by WxIRB::CommandHistory::HISTFILE. It is 
   # actually just a YAMLized array.
-  # By default, this is $HOME/.wxirb_history (no way of 'convenient' way of 
-  # configuring this right now)
+  #
+  # By default, the file is $HOME/.wxirb_history (no 'convenient' way of 
+  # configuring this right now aside from changing the constant)
+  #
   # History is implemented in the WxIRB::CommandHistory class. This is 
   # basically just an Array with a few convenience methods and accessors.
   class CmdHistory < Array
