@@ -353,7 +353,7 @@ module WxIRB
     attr_reader :output, :input
 
     def initialize(parent, opts={})
-      opts[:title] = "WxIRB"
+      opts[:title] ||= "WxIRB"
       super(parent, opts)
       @splitter = TerminalSplitter.new(self)
       @output = OutputTextCtrl.new(@splitter)
