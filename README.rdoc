@@ -1,5 +1,5 @@
 
-== WxIRB
+= WxIRB
 
 This is a GUI "irb-alike" console based on WxRuby. I wrote this because I 
 needed a better way to prototype and debug my wxruby applications as I was
@@ -26,7 +26,7 @@ modifiers:
 *   META+UP-ARROW : scroll up in history
 *   META+DOWN-ARROW : scroll down in history
 
-WxIRB does have a "run" button. Thank goodness!
+WxIRB does not have a "run" button. Thank goodness!
 
 The output text area is read-only from the UI. Tabbing focus from the output 
 text area should land you back in the input text area.
@@ -125,7 +125,6 @@ TOPLEVEL_BINDING makes the scope 'main'.
 When running 'wxirb.rb' directly, you will start with TOPLEVEL_BINDING, but
 you can use the 'set_binding' method of $wxirb to change the binding on the 
 fly.
-
 
 * As mentioned above, WxIRB::BaseFrame also has an instance method called
   set_binding. This method lets you change WxIRB's binding on the fly.
