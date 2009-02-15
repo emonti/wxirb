@@ -3,8 +3,8 @@
 
 This is a GUI "irb-alike" console based on WxRuby. I wrote this because I 
 needed a better way to prototype and debug my wxruby applications as I was
-developing them. WxIRB puts you "inside" a Wx::App.run event loop, letting
-you do things with window objects much more easily.
+developing them. WxIRB puts you "inside" a Wx::App.run event loop, which
+lets you easily play with window objects during run-time.
 
 This is mostly just a port of why_the_lucky_stiff's Shoes GUI irb example to 
 wxruby with the addition of a command history and a few other convenience 
