@@ -6,7 +6,7 @@ needed a better way to prototype and debug my wxruby applications as I was
 developing them. WxIRB puts you "inside" a Wx::App.run event loop, letting
 you do things with window objects much more easily.
 
-This is really just a port of why_the_lucky_stiff's Shoes GUI irb example to 
+This is mostly just a port of why_the_lucky_stiff's Shoes GUI irb example to 
 wxruby with the addition of a command history and a few other convenience 
 methods added in the window classes.
 
@@ -34,40 +34,23 @@ text area should land you back in the input text area.
 
 == Interacting with the WxIRB Window Objects
 
-When running wx_irb.rb directly a variable named is created 'wxirb' in the 
-'main' namespace which holds a reference to the wxirb window.
+When running wx_irb.rb directly a global variable named '$wxirb' is created 
+for you which holds a reference to the WxIRB::BaseFrame window you are using.
 
-This is done so you can access the UI frame object and children from within the 
-actual interface. A few convenience methods and accessors are exposed this way:
+This is done so you can easily access the UI frame object and children from 
+within the actual interface. A few convenience methods and accessors are 
+exposed this way:
 
-*   'wxirb.clear' lets you clear the output window
+*   '$wxirb.clear' lets you clear the output window
 
-*   'wxirb.history' returns the command history object (basically an array)
+*   '$wxirb.history' returns the command history object (basically an array)
 
-*   'wxirb.histdump' prints the history to the output text area.
+*   '$wxirb.histdump(s=0, e=-1)' prints the history to the output text area.
+    to the output text area. Takes optional start and indexes for viewing just 
+    a slice of the history array.
 
-
-The wxirb object also has an 'output' accessor which returns a reference to
-the output text window half of the display. This object has a few methods to
-make it usable (in duck-typing cases) as an IO object. This doesn't 
-actually inherit or implement from the IO class, however.
-
-*   '<<' outputs to the output window
-
-*   'puts' prints directly to the output text area like 'IO.puts' and returns
-    nil.
-
-*   'print' prints directly to the output text area like 'IO.print'
-    and returns nil.
-
-*   'write' prints directly to the output text area like 'IO.write' and returns 
-    the number of bytes written.
-
-*   Note: write, print, and puts all use brown text to differentiate from other
-    output.
-
-*   'close', 'closed?' and 'flush' are also all defined but just emulate an
-    IO object with their return values. Other than that, they do nothing.
+*   '$wxirb.set_binding(bind)' sets the object binding to 'bind' for use in
+     MimickIRB's eval() 'runner'. See 'Object Binding' for more information.
 
 
 == WxIRB CommandHistory
@@ -99,7 +82,76 @@ an array with a few convenience methods and accessors:
 *   'clear' empties the history array and persistent history file
 
 
+== Output to WxIRB
+
+The WxIRB::BaseFrame object also has an 'output' accessor which returns a 
+reference to the OutputTextCtrl text window half of the display. This object 
+has a few methods to make it usable (in duck-typing cases) as an IO object. 
+Note: This doesn't actually inherit from or implement all of IO class, however.
+
+*   '<<' outputs to the output window
+
+*   'puts' prints directly to the output text area like 'IO.puts' and returns
+    nil.
+
+*   'print' prints directly to the output text area like 'IO.print'
+    and returns nil.
+
+*   'write' prints directly to the output text area like 'IO.write' and returns 
+    the number of bytes written.
+
+*   Note: write, print, and puts all use brown text to differentiate from other
+    output.
+
+*   'close', 'closed?' and 'flush' are also all defined but just emulate an
+    IO object with their return values. Other than that, they do nothing.
+
+
+== Object Binding
+
+Originally, WxIRB just ran 'eval' using the TOPLEVEL_BINDING (aka main)
+This is how you usually run IRB. However, it may be desirable to instantiate
+a wxirb console bound to a different namespace for debugging specific objects
+and whatnot.  So a few ways to manage bindings were added.
+
+* WxIRB::BaseFrame.new now accepts an optional binding parameter. For example:
+
+>>  WxIRB::BaseFrame.new(nil, :binding => TOPLEVEL_BINDING)
+
+By default, new WxIRB::BaseFrame objects will bind to themselves. Meaning,
+commands will run in the scope of the WxIRB::BaseFrame scope itself. 
+TOPLEVEL_BINDING makes the scope 'main'.
+
+When running 'wxirb.rb' directly, you will start with TOPLEVEL_BINDING, but
+you can use the 'set_binding' method of $wxirb to change the binding on the 
+fly.
+
+
+* As mentioned above, WxIRB::BaseFrame also has an instance method called
+  set_binding. This method lets you change WxIRB's binding on the fly.
+  Here's a short example from WxIRB running 'wxirb.rb' directly:
+
+>> self
+=> main
+>> $wxirb
+=> #<WxIRB::BaseFrame:0x51e8c0>
+>> $wxirb.set_binding $wxirb.instance_eval { binding }
+=> #<Binding:0x17235fe8>
+>> self
+=> #<WxIRB::BaseFrame:0x51e8c0>
+>> @output
+=> #<WxIRB::InputTextCtrl:0x51d5b0>
+>> @output.puts "hello self"
+hello self
+=> nil
+>> set_binding TOPLEVEL_BINDING
+=> #<Binding:0x296d0>
+>> self
+=> main
+
+
 == BUGS
+
 *   Running statements gets slow when the Output window gets very full. Not
     really sure why this is, but running 'wxirb.clear' periodically helps.
 

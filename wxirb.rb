@@ -18,11 +18,20 @@ class MimickIRB < RubyLex
   class Continue < StandardError; end
   class Empty < StandardError; end
  
-  def initialize
-    super
+  def initialize(bind=TOPLEVEL_BINDING)
+    set_binding(bind)
+    super()
     set_input(StringIO.new)
   end
  
+  def set_binding(bind)
+    if bind.is_a? Binding
+      @bind = bind
+    else
+      raise "Invalid binding #{bind.inspect}"
+    end
+  end
+
   def run(str)
     obj = nil
     @io << str
@@ -41,7 +50,7 @@ class MimickIRB < RubyLex
       end
     end
     unless @line.empty?
-      obj = eval @line, TOPLEVEL_BINDING, "(irb)", @line_no
+      obj = eval @line, @bind, "(irb)", @line_no
     end
     @line_no += @line.scan(/\n/).length
     @line = ''
@@ -124,13 +133,13 @@ module WxIRB
       end
     end
 
-    # an override for the Array superclass that just updates the history 
-    # position variable. This also ensures that history elements are strings.
+    # An override for the Array superclass that just updates the history 
+    # position variable. This also ensures that history elements are appended
+    # as strings.
     def << (val)
-      ret=super(val.to_s)
-      @hpos = self.size-1
+      @hpos = self.size
       @changed=true
-      ret
+      super(val.to_s)
     end
 
     # empties the history array and persistent history file
@@ -168,14 +177,14 @@ module WxIRB
     include Wx
     STYLE = TE_PROCESS_TAB|TE_PROCESS_ENTER|WANTS_CHARS|TE_MULTILINE
 
-    def initialize(parent, output)
+    def initialize(parent, output, mirb)
       super(parent, :style => STYLE)
       @history = CmdHistory.new
       @output = output
 
       @stdout_save = $stdout
       $stdout = StringIO.new
-      @mirb = MimickIRB.new
+      @mirb = mirb 
       evt_idle :on_idle
       evt_char  :on_char
 
@@ -353,14 +362,21 @@ module WxIRB
     attr_reader :output, :input
 
     def initialize(parent, opts={})
+      bind = (opts.delete(:binding) || binding)
+      @mirb=MimickIRB.new(bind)
+
       opts[:title] ||= "WxIRB"
       super(parent, opts)
+
       @splitter = TerminalSplitter.new(self)
       @output = OutputTextCtrl.new(@splitter)
-      @input = InputTextCtrl.new(@splitter, @output)
+      @input = InputTextCtrl.new(@splitter, @output, @mirb)
       @splitter.split_horizontally(@output, @input)
       @input.set_focus()
     end
+
+    # Allow our binding to be changed on the fly
+    def set_binding(bind);  @mirb.set_binding(bind); end
 
     # Clears the output window
     def clear; @output.clear ; end
@@ -377,11 +393,10 @@ module WxIRB
 end
 
 if __FILE__ == $0
-  wxirb = nil
 
   Wx::App.run do 
-    wxirb = WxIRB::BaseFrame.new(nil)
-    wxirb.show
+    $wxirb = WxIRB::BaseFrame.new(nil, :binding => TOPLEVEL_BINDING)
+    $wxirb.show
   end
 
 end
