@@ -128,25 +128,25 @@ fly.
 
 * As mentioned above, WxIRB::BaseFrame also has an instance method called
   set_binding. This method lets you change WxIRB's binding on the fly.
-  Here's a short example from WxIRB running 'wxirb.rb' directly:
+  Here's a short example from inside WxIRB running 'wxirb.rb' directly:
 
->> self
-=> main
->> $wxirb
-=> #<WxIRB::BaseFrame:0x51e8c0>
->> $wxirb.set_binding $wxirb.instance_eval { binding }
-=> #<Binding:0x17235fe8>
->> self
-=> #<WxIRB::BaseFrame:0x51e8c0>
->> @output
-=> #<WxIRB::InputTextCtrl:0x51d5b0>
->> @output.puts "hello self"
-hello self
-=> nil
->> set_binding TOPLEVEL_BINDING
-=> #<Binding:0x296d0>
->> self
-=> main
+    >> self
+    => main
+    >> $wxirb
+    => #<WxIRB::BaseFrame:0x51e8c0>
+    >> $wxirb.set_binding $wxirb.instance_eval { binding }
+    => #<Binding:0x17235fe8>
+    >> self
+    => #<WxIRB::BaseFrame:0x51e8c0>
+    >> @output
+    => #<WxIRB::InputTextCtrl:0x51d5b0>
+    >> @output.puts "hello self"
+    hello self
+    => nil
+    >> set_binding TOPLEVEL_BINDING
+    => #<Binding:0x296d0>
+    >> self
+    => main
 
 
 == BUGS
