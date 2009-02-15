@@ -41,16 +41,16 @@ This is done so you can easily access the UI frame object and children from
 within the actual interface. A few convenience methods and accessors are 
 exposed this way:
 
-*   '$wxirb.clear' lets you clear the output window
+* '$wxirb.clear' lets you clear the output window
 
-*   '$wxirb.history' returns the command history object (basically an array)
+* '$wxirb.history' returns the command history object (basically an array)
 
-*   '$wxirb.histdump(s=0, e=-1)' prints the history to the output text area.
-    to the output text area. Takes optional start and indexes for viewing just 
-    a slice of the history array.
+* '$wxirb.histdump(s=0, e=-1)' prints the history to the output text area.
+  to the output text area. Takes optional start and indexes for viewing just 
+  a slice of the history array.
 
-*   '$wxirb.set_binding(bind)' sets the object binding to 'bind' for use in
-     MimickIRB's eval() 'runner'. See 'Object Binding' for more information.
+* '$wxirb.set_binding(bind)' sets the object binding to 'bind' which is used
+  when running eval() on user input. See also, 'Object Binding'.
 
 
 == WxIRB CommandHistory
