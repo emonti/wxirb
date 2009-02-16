@@ -1,4 +1,3 @@
-require 'rubygems'
 SPEC = Gem::Specification.new do |s|
   s.name      = "wxirb"
   s.version   = "1.0.1"
