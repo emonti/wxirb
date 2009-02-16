@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+begin
+  require 'rubygems'
+rescue LoadError
+end
+
+require 'wx'
+require 'wxirb'
+
+Wx::App.run do 
+  $wxirb = WxIRB::BaseFrame.new(nil, :binding => TOPLEVEL_BINDING)
+  $wxirb.show
+end
+

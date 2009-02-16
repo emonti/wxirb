@@ -387,16 +387,8 @@ module WxIRB
     # Prints the history to the output text area. Takes optional start and 
     # end position indexes for viewing just a slice of the history array.
     def histdump(s=0, e=-1)
-      @output.puts self.history[s..e]
+      puts self.history[s..e]
     end
   end
 end
 
-if __FILE__ == $0
-
-  Wx::App.run do 
-    $wxirb = WxIRB::BaseFrame.new(nil, :binding => TOPLEVEL_BINDING)
-    $wxirb.show
-  end
-
-end
