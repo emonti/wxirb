@@ -8,7 +8,6 @@ require 'yaml'
 require 'irb/ruby-lex'
 require 'stringio'
 
-
 # This class is stolen almost verbatim from why_the_lucky_stiff's Shoes 
 # example. (http://github.com/why/shoes/blob/master/samples/expert-irb.rb)
 # He gets all the credit.
@@ -333,8 +332,8 @@ module WxIRB
     end
   end
 
-  # This class is parent to the Input and Output text areas and provides
-  # a sliding splitter control between them.
+  # This window object is parent to the Input and Output text areas. It
+  # provides a sliding splitter control between the top and bottom text boxes.
   class TerminalSplitter < Wx::SplitterWindow
     def initialize(parent)
       super(parent, :style => Wx::SP_LIVE_UPDATE)
