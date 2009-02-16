@@ -6,7 +6,7 @@ SPEC = Gem::Specification.new do |s|
   s.email     = "emonti@matasano.com"
   s.homepage  = "http://www.matasano.com"
   s.platform  = Gem::Platform::RUBY
-  s.summary   = "A GUI console with 'irb-alike' qualities based on WxRuby"
+  s.summary   = "A GUI IRB-like console based on WxRuby"
 
   s.files = ["README.rdoc", "bin/wxirb", "lib/wxirb.rb"]
 
