@@ -18,7 +18,7 @@ See: http://github.com/why/shoes/blob/master/samples/expert-irb.rb
 WxIRB is available as a gem from github.
 
     gem sources -a http://gems.github.com #(you only have to do this once)
-    sudo gem install wxirb
+    sudo gem install emonti-wxirb
 
 Or you can install it manually:
 
