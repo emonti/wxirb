@@ -1,7 +1,7 @@
 require 'rubygems'
 SPEC = Gem::Specification.new do |s|
   s.name      = "wxirb"
-  s.version   = "1.0.0"
+  s.version   = "1.0.1"
   s.author    = "Eric Monti"
   s.email     = "emonti@matasano.com"
   s.homepage  = "http://www.matasano.com"
