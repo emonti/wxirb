@@ -1,13 +1,13 @@
 SPEC = Gem::Specification.new do |s|
   s.name      = "wxirb"
-  s.version   = "1.0.1.1"
+  s.version   = "1.0.1.2"
   s.author    = "Eric Monti"
   s.email     = "emonti@matasano.com"
   s.homepage  = "http://www.matasano.com"
   s.platform  = Gem::Platform::RUBY
   s.summary   = "A GUI IRB-like console based on WxRuby"
 
-  s.files = ["README.markdown", "bin/wxirb", "lib/wxirb.rb"]
+  s.files = ["README.rdoc", "bin/wxirb", "lib/wxirb.rb"]
 
   s.require_path      = "lib"
   s.autorequire       = "wxirb"
