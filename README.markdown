@@ -1,10 +1,12 @@
 
-= WxIRB
+# WxIRB
 
 This is a GUI "irb-alike" console based on WxRuby. I wrote this because I 
 needed a better way to prototype and debug my wxruby applications as I was
 developing them. WxIRB puts you "inside" a Wx::App.run event loop, which
 lets you easily play with window objects during run-time.
+
+![screenshot](http://github.com/emonti/wxirb/blob/master/screenshots/screenshot.png?raw=true)
 
 This is mostly just a port of why_the_lucky_stiff's Shoes GUI irb example to 
 wxruby with the addition of a command history and a few other convenience 
@@ -13,7 +15,7 @@ methods added in the window classes.
 Credit to Why.
 See: http://github.com/why/shoes/blob/master/samples/expert-irb.rb
 
-== Installation
+## Installation
 
 WxIRB is available as a gem from github.
 
@@ -26,7 +28,7 @@ Or you can install it manually:
     sudo cp wxirb/lib/wxirb.rb /usr/lib/ruby/1.8/site_ruby/1.8 # or wherever
     sudo cp wxirb/bin/wxirb /usr/local/bin # or wherever
 
-== Keyboard Interaction
+## Keyboard Interaction
 
 WxIRB is designed to allow you to edit multi-line ruby statements in the
 input window. The keyboard commands in the input text area are what you'
@@ -44,9 +46,9 @@ The output text area is read-only from the UI. Tabbing focus from the output
 text area should land you back in the input text area.
 
 
-== Interacting with the WxIRB Window Objects
+## Interacting with the WxIRB Window Objects
 
-When running wx_irb.rb directly a global variable named '$wxirb' is created 
+When running 'bin/wxirb' directly a global variable named '$wxirb' is created 
 for you which holds a reference to the WxIRB::BaseFrame window you are using.
 
 This is done so you can easily access the UI frame object and children from 
@@ -65,7 +67,7 @@ exposed this way:
   when running eval() on user input. See also, 'Object Binding'.
 
 
-== WxIRB CommandHistory
+## WxIRB CommandHistory
 
 WxIRB maintains a persistent history log. The WxIRB history uses a separate 
 file from IRB which is defined by WxIRB::CommandHistory::HISTFILE. It is 
@@ -94,7 +96,7 @@ an array with a few convenience methods and accessors:
 *   'clear' empties the history array and persistent history file
 
 
-== Output to WxIRB
+## Output to WxIRB
 
 The WxIRB::BaseFrame object also has an 'output' accessor which returns a 
 reference to the OutputTextCtrl text window half of the display. This object 
@@ -119,7 +121,7 @@ Note: This doesn't actually inherit from or implement all of IO class, however.
     IO object with their return values. Other than that, they do nothing.
 
 
-== Object Binding
+## Object Binding
 
 Originally, WxIRB just ran 'eval' using the TOPLEVEL_BINDING (aka main)
 This is how you usually run IRB. However, it may be desirable to instantiate
@@ -140,7 +142,7 @@ fly.
 
 * As mentioned above, WxIRB::BaseFrame also has an instance method called
   set_binding. This method lets you change WxIRB's binding on the fly.
-  Here's a short example from inside WxIRB running 'wxirb.rb' directly:
+  Here's a short example from inside WxIRB while running 'wxirb' directly:
 
     >> self
     => main
@@ -161,13 +163,13 @@ fly.
     => main
 
 
-== BUGS
+## BUGS
 
 *   Running statements gets slow when the Output window gets very full. Not
     really sure why this is, but running 'wxirb.clear' periodically helps.
 
-*   An effort is made to rescue most exceptions, but sometimes wxirb will
-    close due to an un-handled exception. Regular 'irb' does this too 
-    sometimes... so I don't feel too bad.
+*   An effort is made to rescue most exceptions and display them. But 
+    occasionally, wxirb will close due to an un-handled exception. Regular 
+    'irb' does this too sometimes though we'd like not to.
 
 
