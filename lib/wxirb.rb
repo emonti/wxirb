@@ -8,6 +8,10 @@ require 'yaml'
 require 'irb/ruby-lex'
 require 'stringio'
 
+module WxIRB
+  VERSION = "1.0.2"
+end
+
 # This class is stolen almost verbatim from why_the_lucky_stiff's Shoes 
 # example. (http://github.com/why/shoes/blob/master/samples/expert-irb.rb)
 # He gets all the credit.

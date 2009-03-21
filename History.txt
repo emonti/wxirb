@@ -1,0 +1,4 @@
+== 1.0.2 / 2009-03-20
+
+* enhancements
+  * Started using bones to help manage this mess. History.txt is born!
