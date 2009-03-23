@@ -48,8 +48,8 @@ text area should land you back in the input text area.
 
 == Interacting with the WxIRB Window Objects
 
-When running 'bin/wxirb' directly a global variable named '$wxirb' is created 
-for you which holds a reference to the WxIRB::BaseFrame window you are using.
+When running 'bin/wxirb' directly, a global variable named '$wxirb' is created 
+for you that holds a reference to the WxIRB::BaseFrame window you are using.
 
 This is done so you can easily access the UI frame object and children from 
 within the actual interface. A few convenience methods and accessors are 
@@ -73,7 +73,7 @@ WxIRB maintains a persistent history log. The WxIRB history uses a separate
 file from IRB which is defined by WxIRB::CommandHistory::HISTFILE. It is 
 actually just a YAMLized array.
 
-By default, this is $HOME/.wxirb_history (no way of 'convenient' way of 
+By default, this is $HOME/.wxirb_history (currently no 'convenient' way of 
 configuring this right now)
 
 History is implemented in the WxIRB::CommandHistory class. This is basically 
