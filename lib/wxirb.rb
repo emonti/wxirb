@@ -34,6 +34,9 @@ class MimickIRB < RubyLex
       raise "Invalid binding #{bind.inspect}"
     end
   end
+  # these aliases are a little more like irb
+  alias change_binding set_binding
+  alias cb set_binding
 
   def run(str)
     obj = nil
@@ -380,6 +383,8 @@ module WxIRB
 
     # Allow our binding to be changed on the fly
     def set_binding(bind);  @mirb.set_binding(bind); end
+    alias cb set_binding
+    alias change_binding set_binding
 
     # Clears the output window
     def clear; @output.clear ; end
