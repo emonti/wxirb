@@ -138,7 +138,7 @@ TOPLEVEL_BINDING makes the scope 'main'.
 
 When running 'wxirb.rb' directly, you will start with TOPLEVEL_BINDING, but
 you can use the 'set_binding' method of $wxirb to change the binding on the 
-fly.
+fly. There are also aliases for 'cb' and 'change_binding' as in IRB.
 
 * As mentioned above, WxIRB::BaseFrame also has an instance method called
   set_binding. This method lets you change WxIRB's binding on the fly.
@@ -148,7 +148,7 @@ fly.
     => main
     >> $wxirb
     => #<WxIRB::BaseFrame:0x51e8c0>
-    >> $wxirb.set_binding $wxirb.instance_eval { binding }
+    >> $wxirb.set_binding $wxirb
     => #<Binding:0x17235fe8>
     >> self
     => #<WxIRB::BaseFrame:0x51e8c0>

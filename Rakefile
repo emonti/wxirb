@@ -24,7 +24,7 @@ PROJ.email = 'emonti@matasano.com'
 PROJ.description = 'A wxwidgets-based IRB-like ruby console'
 PROJ.url = 'http://www.github.com/emonti/wxirb'
 PROJ.version = WxIRB::VERSION
-#PROJ.rubyforge.name = 'wxirb'
+PROJ.rubyforge.name = 'wxirb'
 PROJ.readme_file = 'README.rdoc'
 
 PROJ.spec.opts << '--color'
