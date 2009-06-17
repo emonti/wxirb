@@ -1,3 +1,8 @@
+== 1.0.3 / 2009-06-16
+* minor enhancement
+  * set_binding, cb, change_binding take any object and bind to it now
+    or... still take a Binding object
+
 == 1.0.2 / 2009-03-20
 
 * enhancements

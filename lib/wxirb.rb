@@ -9,7 +9,7 @@ require 'irb/ruby-lex'
 require 'stringio'
 
 module WxIRB
-  VERSION = "1.0.2"
+  VERSION = "1.0.3"
 end
 
 # This class is stolen almost verbatim from why_the_lucky_stiff's Shoes 
@@ -31,9 +31,10 @@ class MimickIRB < RubyLex
     if bind.is_a? Binding
       @bind = bind
     else
-      raise "Invalid binding #{bind.inspect}"
+      @bind = bind.instance_eval { binding }
     end
   end
+
   # these aliases are a little more like irb
   alias change_binding set_binding
   alias cb set_binding
