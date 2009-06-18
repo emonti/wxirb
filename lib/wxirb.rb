@@ -85,10 +85,9 @@ end
 # Docs say there's a KeyEvent.cmd_down which is platform independent. 
 # But they LIE so we create our own...
 class Wx::KeyEvent
-  case  Wx::PLATFORM
-  when "WXMAC"
+  if  Wx::PLATFORM == "WXMAC"
     def inputmod_down; meta_down; end
-  when "WXMSW"
+  else
     def inputmod_down; alt_down; end
   end
 end
